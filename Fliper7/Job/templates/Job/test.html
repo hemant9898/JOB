@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static 'Job/home.css' %}">
+</head>
+<body>
+
+<h1>After Filter</h1>
+<div class="grid-container">
+  {% for company in posts  %}
+  <div>
+    <form action="#" method="POST" style="">
+        {%  csrf_token %}
+        <div class="card-container">
+            <span class="pro">PRO</span>
+            <img class="round" src="https://randomuser.me/api/portraits/women/79.jpg" alt="user" />
+            <h3>ll{{company.cname}}</h3>
+            <h6>New York</h6>
+            <p>User interface designer and <br/> front-end developer</p>
+            <div class="buttons">
+                <button class="primary">
+                    Apply Now
+                </button>
+                <button class="primary ghost">
+                    Message
+                </button>
+            </div>
+            <div class="skills">
+                <h6>Type</h6>
+                <ul>
+                    <a href="#" style="color:white"><li>Full Time</li></a>
+                    <a href="#" style="color:white"><li>Min 1 Year</li></a>
+                    <a href="#" style="color:white"><li>Senior Level</li></a>
+                </ul>
+            </div>
+        </div>
+    </form>
+  </div>
+  {% empty %}
+      <h1><li style="text-align: center;color:grey">NO Result Found</li></h1>
+  {% endfor %}
+</div>
+</body>
+</html>
