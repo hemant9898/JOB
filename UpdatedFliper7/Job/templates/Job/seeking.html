@@ -1,0 +1,73 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'Job/home.css' %}">  
+    <title>hoome</title>
+</head>
+<body style="background-color:grey;font-family: Montserrat, sans-serif;">
+
+<h2>WELCOME "{{user.username}}"<a href="{% url 'Job:home' %}" style="margin-left: 70%">Home</a></h2>
+<br> <h2><b style="margin-left: 40%">Your apllied jobs: </b></h2>
+
+    <div class="grid-container">
+      {% for company in posts.object_list  %}
+        <div>
+          <form action="{% url 'Job:jsp' user.id company.id %}" method="POST" style="">
+              {%  csrf_token %}
+              <div class="card-container">
+                  <span class="pro">PRO</span>
+                  <img class="round" src="https://randomuser.me/api/portraits/women/79.jpg" alt="user" />
+                  <h3>{{company.cname}}</h3>
+                  <h6>New York</h6>
+                  <p>User interface designer and <br/> front-end developer</p>
+                  <div class="buttons" type="submit">
+                      <button class="primary">
+                          Apply Now
+                      </button>
+                      <button class="primary ghost">
+                          Message
+                      </button>
+                  </div>
+                  <div class="skills">
+                      <h6>Type</h6>
+                      <ul>
+                          <a href="#" style="color:white"><li>Full Time</li></a>
+                          <a href="#" style="color:white"><li>Min 1 Year</li></a>
+                          <a href="#" style="color:white"><li>Senior Level</li></a>
+                      </ul>
+                  </div>
+              </div>
+          </form>
+        </div>
+        {% empty %}
+      <h1><li style="text-align: center;color:black">NO Result Found</li></h1>
+      {% endfor %}
+    </div>
+
+<br><br>
+    <div class="pagination" style="margin-left: 40%">
+      {% if posts.has_previous %}
+        <a href="?page=1" >First</a>
+        <a href="?page={{posts.previos_page_number}}">previos</a>
+      {% endif %}
+
+      {% for num in posts.paginator.page_range %}
+        {% if posts.number == num %}
+          <a href="?page={{ num }}" class="active">{{ num }}</a>
+          {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}
+            <a href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if posts.has_next %}
+        <a href="?page={{poats.next_page_number}}">next</a>
+        <a href="?page={{posts.paginator.num_pages}}">last</a>
+      {% endif %}
+    </div>
+    <br>
+    <br>
+</body>
+</html>
